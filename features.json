@@ -1,0 +1,25 @@
+{
+  "_id": "features",
+  "features": [
+    {
+      "title": "Welcome!",
+      "content": "Welcome to [chewbranca.com](chewbranca.com)! Here you'll find thoughts and dabblings in tech, food, and wayward tangents. Enjoy!"
+    },
+    {
+      "title": "Visualizing Volcanoes Demo",
+      "content": "View the demo of my Visualizing Volcanoes talk presented recently at [CascadiaJS](http://cascadiajs.com)",
+      "link": {
+        "href": "https://chewbranca.cloudant.com/volcanoes/_design/volcanoes/index.html",
+        "title": "View Demo"
+      }
+    },
+    {
+      "title": "Visualizing Volcanoes Slides",
+      "content": "View the slides of my Visualizing Volcanoes talk presented recently at [CascadiaJS](http://cascadiajs.com)",
+      "link": {
+        "href": "https://chewbranca.cloudant.com/volcanoes/_design/impress-ca/impress.html#/visualizingvolcanoes",
+        "title": "View Slides"
+      }
+    }
+  ]
+}

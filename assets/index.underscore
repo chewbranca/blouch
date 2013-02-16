@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+		<title><%= blouch.title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <% console.log("BLOUCH SETTINGS: ", blouch) %>
+    <% _.each(blouch, function(value, name) { %>
+      <meta name="blouch:<%= name %>" content='<%= JSON.stringify(value) %>'>
+    <% }); %>
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="<%= assets_root %>css/index.css">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <!--<link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">-->
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+  </head>
+  <base href="<%= base %>"></base>
+  <body>
+
+    <div role="main" id="main">
+      <div id="app-container"></div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; chewbranca.com 2012 -- powered by Blouch</p>
+      </footer>
+    </div>
+
+    <!-- Application source. -->
+    <script data-main="/app/config" src="<%= assets_root %>js/<%= requirejs %>"></script>
+    <!-- 3rd party scripts -->
+    <% if (blouch.google_analytics) { %>
+      <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '<%= blouch.google_analytics.account %>']);
+        _gaq.push(['_setDomainName', '<%= blouch.google_analytics.domain %>']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+         })();
+
+       </script>
+     <% } %>
+     <% if (blouch.disqus) { %>
+       <script type="text/javascript">
+         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+       var disqus_shortname = '<%= blouch.disqus.username %>'; // required: replace example with your forum shortname
+
+       /* * * DON'T EDIT BELOW THIS LINE * * */
+       (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+        }());
+      </script>
+    <% } %>
+  </body>
+</html>

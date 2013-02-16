@@ -1,0 +1,13 @@
+<% if (features && features.hasFeatures()) { %>
+  <div class="row">
+    <% _.each(features.features(), function(feature, idx) { %>
+      <div id="feature-<%= idx %>" class="span4">
+        <h2><%= feature.title %></h2>
+        <p><%= features.convert(feature.content) %></p>
+        <% if (feature.link) { %>
+          <p><a class="btn" data-bypass="true" href="<%= feature.link.href %>"><%= feature.link.title %> &raquo;</a></p>
+        <% } %>
+      </div>
+    <% }); %>
+  </div>
+<% } %>

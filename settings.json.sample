@@ -1,0 +1,33 @@
+{
+	"blouch": {
+		"default": {
+			"title": "BLOUCH BABY",
+			"google_analytics": {
+				"account": "UA-1234",
+				"domain": "chewbranca.com"
+			},
+			"disqus": {
+				"username": "chewbranca"
+      },
+			"twitter": "chewbranca",
+			"copyright": "My copyright",
+			"github": "chewbranca"
+		}
+	},
+	"couchdb": {
+		"default": {
+			"db": "http://localhost:5984/blouch",
+			"app": "./couchapp.js",
+			"options": {
+				"okay_if_missing": true
+			}
+		},
+		"chewbranca": {
+			"db": "http://foo:bar@my.site.com",
+			"app": "./couchapp.js",
+			"options": {
+				"okay_if_missing": true
+			}
+		}
+	}
+}

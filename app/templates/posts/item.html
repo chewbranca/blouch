@@ -1,0 +1,36 @@
+<a class="pull-left" href="#">
+  <% if (post.hasImage()) { %>
+    <img width="100px" height="100px" class="media-object" src="<%= post.imageUrl() %>">
+  <% } else { %>
+    <img class="media-object" src="http://placehold.it/100x100">
+  <% } %>
+</a>
+<div class="media-body">
+  <a href="<%= post.link() %>"><h4 class="media-heading"><%= post.get('title') %></h4></a>
+  <p><%= post.get('blurb') %></p>
+  <% if (post.hasTags()) { %>
+    <p>
+      <% _.each(post.tags(), function(tag) { %>
+        <span class="label"><a href="/tags/<%= tag %>"><%= tag %></a></span>
+      <% }) %>
+      <span class="label label-info"><a href="<%= post.link() %>#disqus_thread">View More</a></span>
+    </p>
+  <% } %>
+
+<!--
+  <div class="btn-group">
+    <button class="btn"></button>
+    <button class="btn">2</button>
+    <button class="btn">3</button>
+  </div>
+  <div class="media">
+    <a class="pull-left" href="#">
+      <img class="media-object" src="http://placehold.it/64x64">
+    </a>
+    <div class="media-body">
+      <h4 class="media-heading">Media heading</h4>
+      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+    </div>
+  </div>
+-->
+</div>

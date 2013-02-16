@@ -1,0 +1,19 @@
+* Blouch TODO ITEMS
+* TODO Launch List
+** DONE clean up nginx file DRY THAT SHIT
+   - State "DONE"       from "TODO"       [2012-11-15 Thu 13:45]
+** TODO add disqus
+** TODO add permalinks in urls
+** TODO add tag cloud
+** TODO switch to Couger
+** TODO http://www.flickr.com/photos/digitalart/1486910530/
+** TODO add date based archive
+** TODO add draft status
+** TODO add quotes and other data types
+** TODO add google analytics
+** TODO add books page
+** TODO fix data bypass to allow disqus and what not
+** TODO fix firefox issue
+** TODO setup prod server
+** TODO research couchdb security
+* TODO write up blog post about html5 pushstate and couchapps
