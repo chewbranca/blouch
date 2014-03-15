@@ -1,0 +1,16 @@
+<% if (user.canPost()) { %>
+<% console.log("HELLO USER",user) %>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hello, <%= user.name() %> <b class="caret"></b></a>
+  <ul class="dropdown-menu">
+    <li><a href="/new_post">New Post</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+    <li class="divider"></li>
+    <li class="nav-header">Nav header</li>
+    <li><a href="#">Separated link</a></li>
+    <li><a href="#">One more separated link</a></li>
+  </ul>
+<% } else { %>
+<% console.log("NO USER",user) %>
+  <a href="#modal-login" data-bypass="true" data-toggle="modal">Login</a>
+<% } %>

@@ -242,4 +242,5 @@ module.exports = function(grunt) {
   grunt.registerTask("release", "debug min mincss");
   grunt.registerTask("couchdb", "test build minify template:couchdb copy:couchdb");
   grunt.registerTask("couchapp_setup", "debug template:default");
+  grunt.registerTask("couchapp_dev", "couchapp_setup couchapp:default");
 };

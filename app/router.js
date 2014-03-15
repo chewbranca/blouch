@@ -8,23 +8,26 @@ define([
   // Modules
   "modules/blouch",
   "modules/posts",
-  "modules/github"
+  "modules/github",
+  "modules/user"
 ],
 
-function(app, Initialize, Blouch, Posts, Github) {
+function(app, Initialize, Blouch, Posts, Github, User) {
 
   // Defining the application router, you can attach sub routers here.
   var Router = Backbone.Router.extend({
     routes: {
       "": "index",
       "posts/:postID": "post",
-      "tags/:tag": "tag"
+      "tags/:tag": "tag",
+      "new_post": "newPost"
     },
 
     initialize: function() {
-      this.navBar = new Blouch.Views.NavBar();
+      this.user = new User.Model();
+      this.navBar = new Blouch.Views.NavBar({model:this.user});
       this.features = new Blouch.Features();
-      this.githubUser = new Github.User({ name: "chewbranca" });
+      this.githubUser = new Github.User({ name: app.settings.github });
       this.githubEvents = new Github.Events(null, { user: this.githubUser });
       //this.disqusBase = new Blouch.Disqus.Base();
       //this.googleAnalytics = new Blouch.GoogleAnalytics();
@@ -42,14 +45,18 @@ function(app, Initialize, Blouch, Posts, Github) {
           "#blouch-features": this.featuresView,
           "#github-feed": this.githubEventsView,
           "#primary-navbar": this.navBar
-          //"#disqus-base": this.disqusBase,
-          //"#google-analytics": this.googleAnalytics
         }
       });
 
       $("#app-container").html(this.homepage.$el);
       //$("#disqus-base").html(this.disqusBase.render().view.$el);
       this.homepage.render();
+      var u = this.user;
+      /*
+      this.user.fetch().done(function(resp) {
+        console.log("FETCHED USER: ", resp, u);
+      });
+      */
       this.features.fetch().done(function(resp) {
         featuresView.render();
       });
@@ -92,6 +99,17 @@ function(app, Initialize, Blouch, Posts, Github) {
       post.fetch().done(function(resp) {
         postView.render();
       });
+    },
+
+    newPost: function() {
+      var post = new Posts.Model();
+      console.log("NEW POST");
+
+      var newPostView = this.homepage.setView("#blouch-content", new Posts.Views.New({
+        model: post
+      }));
+
+      newPostView.render();
     }
   });
 

@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="span9">
+    <div class="page-header">
+      <h1>New Post</h1>
+
+      <form class="post-form">
+        <fieldset>
+          <legend>Legend</legend>
+          <label>Label name</label>
+          <input name="title" class="input-xxlarge" type="text" placeholder="Awesome Title Here">
+          <span class="help-block">You can leave the title blank for untitled things like quotes</span>
+          <div class="control-group control-group-tags">
+            <label>Tags</label>
+            <input name="tags" class="input-xlarge" type="text" placeholder="pizza, coffee, etc">
+            <span class="help-block">CSV list of tags</span>
+          </div>
+          <div class="control-group control-group-imageUrl">
+            <label>Image URL</label>
+            <input name="imageUrl" class="input-xlarge" type="text" placeholder="http://foo.com/bar.jpg">
+            <span class="help-block">External url for thumbnail</span>
+          </div>
+          <label>Item Type</label>
+          <select name="type">
+            <option selected="selected" value="post">post</option>
+            <option value="quote">quote</option>
+            <option value="video">video</option>
+            <option value="link">link</option>
+          </select>
+          <div class="control-group control-group-body">
+            <label>Body Content</label>
+            <textarea name="content" class="span8" rows="10"></textarea>
+            <span class="help-block">Content can be created with Markdown and Bootstrap</span>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary publish-post">Publish Post</button>
+            <button type="button" class="btn preview-post">Preview</button>
+          </div>
+        </fieldset>
+      </form>
+
+    </div>
+  </div>
+
+  <div class="hide" id="preview-form-body">
+    <h1 class="title"></h1>
+    <h3 class="type"></h3>
+    <h3 class="tags"></h3>
+    <img class="imageUrl" src="" />
+    <div class="body"></div>
+  </div>
+</div>

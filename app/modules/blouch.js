@@ -9,8 +9,38 @@ function(app) {
   Blouch.Views.NavBar = Backbone.View.extend({
     template: "nav_bar",
 
+    initialize: function() {
+      this.userNavBar = new Blouch.Views.UserNavBar({model:this.model});
+    },
+
     serialize: function() {
       return { blouch: app.settings };
+    },
+
+    afterRender: function() {
+      //$("#user-nav-bar").html(this.userNavBar.el);
+      $("#primary-nav-list").append(this.userNavBar.el);
+    }
+  });
+
+  Blouch.Views.UserNavBar = Backbone.View.extend({
+    template: "user_nav_bar",
+    tagName: "li",
+    className: "dropdown",
+
+    initialize: function() {
+      this.model.on("reset", "render", this);
+      var that = this;
+      this.model.fetch().done(function(resp) {
+        that.render();
+      });
+    },
+
+    serialize: function() {
+      return {
+        blouch: app.settings,
+        user: this.model
+      };
     }
   });
 

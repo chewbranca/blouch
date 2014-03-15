@@ -22,11 +22,13 @@ function(app, Backbone, Showdown) {
 
     content: function() {
       this.converter = this.converter || new Showdown.converter();
-      return this.converter.makeHtml(this.get('markdownContent'));
+      return this.converter.makeHtml(this.get('content'));
     },
 
     url: function() {
-      if (this.get("slug")) {
+      if (!this.id) {
+        return app.couchhost;
+      } else if (this.get("slug")) {
         return [
           app.couchhost,
           '/_design/blouch/_view/by_slug?key="',
@@ -50,6 +52,11 @@ function(app, Backbone, Showdown) {
       if (!title) return this.id;
 
       return title.toLowerCase().replace(/\s+/g, '-');
+    },
+
+    setAttributes: function() {
+      this.set('slug', this.slug());
+      this.set('created_at', (new Date()).getTime());
     },
 
     hasTags: function() {
@@ -144,6 +151,84 @@ function(app, Backbone, Showdown) {
 
   Posts.Views.Full = Backbone.View.extend({
     template: "posts/full",
+
+    serialize: function() {
+      return {
+        post: this.model,
+        blouch: app.settings
+      };
+    }
+  });
+
+  Posts.Views.New = Backbone.View.extend({
+    template: "posts/new",
+    imageRegex: /^https?:\/\/(?:[a-z\-]+\.)+[a-z]{2,6}(?:\/[^\/#?]+)+\.(?:jpe?g|gif|png)$/i,
+    events: {
+      "click button.preview-post": "previewPost",
+      "click button.publish-post": "publishPost"
+    },
+
+    validate: function() {
+      this.model.setAttributes();
+      var imageUrl = this.model.get('imageUrl');
+      var tags = this.model.get('tags');
+      var bodyContent = this.model.get('content');
+
+      $(".control-group").removeClass("error");
+
+      if (imageUrl && !imageUrl.match(this.imageRegex)) {
+        $(".control-group-imageUrl").addClass("error");
+        $(".control-group-imageUrl span.help-block").html("Image URL should look like a remote image url");
+        return "Image URL Error";
+      }
+
+      if (tags.length && ! _.all(tags, function(tag) { return tag.match(/^[a-zA-Z0-9_]+$/); })) {
+        console.log("TAGS", tags.length, tags, _.all(tags, function(tag) { return tag.match(/^[a-zA-Z0-9_]$/); }));
+        $(".control-group-tags").addClass("error");
+        $(".control-group-tags span.help-block").html("Tags may be alphanumerics and underscores");
+        return "Tags Error";
+      }
+
+      if (!bodyContent) {
+        $(".control-group-body").addClass("error");
+        $(".control-group-body span.help-block").html("Body must be present");
+        return "Body Error";
+      }
+    },
+
+    loadFromForm: function() {
+      var data = this.$el.find("form.post-form").serializeObject();
+      data.tags = _.compact(data.tags.trim().split(/,\s*/));
+      this.model.set(data);
+    },
+
+    previewPost: function() {
+      this.loadFromForm();
+      if (this.validate()) return false;
+
+      console.log("PREVIEWING POST", this);
+      $("#preview-form-body h1.title").html(this.model.get('title'));
+      $("#preview-form-body h3.type").html("Type: " + this.model.get('type'));
+      $("#preview-form-body h3.tags").html("Tags: " + this.model.get('tags'));
+      $("#preview-form-body img.imageUrl").attr("src", this.model.get('imageUrl'));
+      $("#preview-form-body .body").html(this.model.content());
+      $("#preview-form-body").removeClass('hide');
+    },
+
+    publishPost: function(event) {
+      event.preventDefault();
+
+      this.loadFromForm();
+      if (this.validate()) return false;
+      var post = this.model;
+
+      this.model.save().done(function(resp) {
+        console.log("POST PUBLISHED: ", resp);
+        app.navigate(post.link());
+      });
+
+      console.log("PUBLISHING POST", this);
+    },
 
     serialize: function() {
       return {

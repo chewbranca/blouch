@@ -8,7 +8,9 @@ ddoc = {
     {from:"/", to:'index.html'},
     {from:"/assets/*", to:'/assets/*'},
     {from:"/api/*", to:'../../*'},
-    {from:"/*", to:'../../*'}
+    //{from:"/db/*", to:'../../../*'},
+    {from:":db/*", to:'../../*'}
+    //{from:"/*", to:'../../*'}
   ],
   views: {
     by_type: {
